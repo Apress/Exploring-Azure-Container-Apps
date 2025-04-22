@@ -1,0 +1,18 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: statestore
+spec:
+  type: state.azure.cosmosdb
+  version: v1
+  metadata:
+  - name: url
+    value: https://cosmos-claims-tracker-state-store-z3ui.documents.azure.com:443/
+  - name: masterKey
+    value: "euvmUeHnieYY5xKBASi2c6YjUQXnhaSYwi28aQ1OvB3xiyfLtn4OL6yo0hxE49dd8tMC8Apik8ZMACDbGvJn2A=="
+  - name: database
+    value: claimsmanagerdb
+  - name: collection
+    value: claimscollection
+scopes:
+- BenefitsManager-Backend-Bff-Api
