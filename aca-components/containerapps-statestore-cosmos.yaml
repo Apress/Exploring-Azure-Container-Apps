@@ -1,0 +1,11 @@
+componentType: state.azure.cosmosdb
+version: v1
+metadata:
+  - name: url
+    value: https://cosmos-claims-tracker-state-store-z3ui.documents.azure.com:443/
+  - name: database
+    value: claimsmanagerdb
+  - name: collection
+    value: claimscollection
+scopes:
+  - ca-benefitsmanager-bff-api
