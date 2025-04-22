@@ -1,0 +1,6 @@
+@BenefitsManager.Processor.Backend.Svc_HostAddress = http://localhost:5289
+
+GET {{BenefitsManager.Processor.Backend.Svc_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

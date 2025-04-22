@@ -1,6 +1,5 @@
 # Exploring-Azure-Container-Apps
  
-
 This book offers a hands-on, practical application built using a microservices architecture pattern. The application centers around an expense management solution, enabling external users (employees) to submit expenses, which are then reviewed by internal users (administrators). The solution will consist of multiple microservices, each with specific capabilities, demonstrating how ACA, Dapr, and KEDA can simplify microservice-based architectures. The diagram below shows the architecture of the solution that we will build throughout the book's chapters(see figure 1-4). The main components of the solution are as follows:
 
 ACA Web App - Frontend is a simple ASP.NET Blazor Server app that accepts requests from external users to manage their expenses, and it allows internal users to review submitted expenses. It invokes the component "ACA WebAPI-BFF" endpoints via HTTP or gRPC.
