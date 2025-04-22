@@ -1,2 +1,3 @@
 # Exploring-Azure-Container-Apps
- Source Code
+ 
+This repository contains code for ACA book. 
