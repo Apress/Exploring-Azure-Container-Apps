@@ -1,0 +1,136 @@
+@BenefitsManager.Backend.Bff.Api_HostAddress = http://localhost:3500
+
+GET {{BenefitsManager.Backend.Bff.Api_HostAddress}}/api/claims/?userId=user3@mail.com
+Accept: application/json
+
+###
+
+# Get claims using DAPR Side car API endpoint running locally
+GET {{BenefitsManager.Backend.Bff.Api_HostAddress}}/v1.0/invoke/BenefitsManager-Backend-Bff-Api/method/api/claims/?userId=user3@mail.com
+Accept: application/json
+
+###
+
+# Retrieve single individual claim using key from state store
+GET {{BenefitsManager.Backend.Bff.Api_HostAddress}}/v1.0/state/statestore/Claim2
+Accept: application/json
+
+###
+POST {{BenefitsManager.Backend.Bff.Api_HostAddress}}/v1.0/state/statestore
+Host: localhost:3500
+Content-Type: application/json
+[
+  {
+    "key": "Claim1",
+    "value": {
+      "claimId": "59E029B1-1621-45A1-8263-A77AA7758FAE",
+      "merchant": "Merchant-10",
+      "claimedAmount": 80,
+      "approvedAmount": null,
+      "purchaseDate": 1733201907427,
+      "category": {
+        "categoryCode": "CAT004",
+        "parentCategoryName": "Fitness Activities",
+        "categoryName": "Gym"
+      },
+      "description": "Random description2",
+      "statusLog": [
+        {
+          "status": 0,
+          "comment": "",
+          "setBy": {
+            "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+            "email": "user3@mail.com",
+            "name": "User-3"
+          },
+          "ts": 1733450307427
+        }
+      ],
+      "currentStatus": 0,
+      "receiptPath": "https://storage.blob.core.windows.net/claims/63105a50-e295-4619-8708-c790601c976d/receipt.pdf",
+      "createdBy": {
+        "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+        "email": "user3@mail.com",
+        "name": "User-3"
+      },
+      "createdOn": 1733450307427,
+      "modifiedOn": null
+    }
+  },
+  {
+    "key": "Claim2",
+    "value": {
+      "claimId": "572F81CE-BE0E-49CA-BAD4-E6B92E4411F2",
+      "merchant": "Merchant-11",
+      "claimedAmount": 90,
+      "approvedAmount": null,
+      "purchaseDate": 1733201907427,
+      "category": {
+        "categoryCode": "CAT005",
+        "parentCategoryName": "Fitness Activities",
+        "categoryName": "Gym"
+      },
+      "description": "Random description4",
+      "statusLog": [
+        {
+          "status": 0,
+          "comment": "",
+          "setBy": {
+            "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+            "email": "user3@mail.com",
+            "name": "User-3"
+          },
+          "ts": 1733450307427
+        }
+      ],
+      "currentStatus": 0,
+      "receiptPath": "https://storage.blob.core.windows.net/claims/bf6e5ec8-852d-4103-a3ce-cbc089b8691b/receipt.pdf",
+      "createdBy": {
+        "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+        "email": "user3@mail.com",
+        "name": "User-3"
+      },
+      "createdOn": 1733450307427,
+      "modifiedOn": null
+    }
+  }
+]
+
+###
+POST {{BenefitsManager.Backend.Bff.Api_HostAddress}}/v1.0/publish/claimspubsub/claimsavedtopic
+Host: localhost:3500
+Content-Type: application/json
+{
+  "claimId": "7D7FBADD-BBB9-440F-B755-995610327558",
+  "merchant": "Merchant-15",
+  "claimedAmount": 80,
+  "approvedAmount": null,
+  "purchaseDate": 1733201907427,
+  "category": {
+    "categoryCode": "CAT004",
+    "parentCategoryName": "Fitness Activities",
+    "categoryName": "Gym"
+  },
+  "description": "Random description2",
+  "statusLog": [
+        {
+          "status": 0,
+          "comment": "",
+          "setBy": {
+            "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+            "email": "user3@mail.com",
+            "name": "User-3"
+          },
+          "ts": 1733450307427
+        }
+      ],
+      "currentStatus": 0,
+      "receiptPath": "https://storage.blob.core.windows.net/claims/bf6e5ec8-852d-4103-a3ce-cbc089b8691b/receipt.pdf",
+      "createdBy": {
+        "id": "323a3afe-711f-4aa6-80d0-f848d24a5340",
+        "email": "user3@mail.com",
+        "name": "User-3"
+      },
+      "createdOn": 1733450307427,
+      "modifiedOn": null
+}
