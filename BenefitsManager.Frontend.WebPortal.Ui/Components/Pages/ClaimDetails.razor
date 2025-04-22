@@ -1,0 +1,45 @@
+@page "/claim/{claimId}"
+@using BenefitsManager.Common.Models
+@using BenefitsManager.Frontend.WebPortal.Ui.Services
+@using System.ComponentModel.DataAnnotations
+@inject ClaimsService ClaimsService
+
+<h3>Claims List</h3>
+
+@if (claim == null)
+{
+    <p>Loading...</p>
+}
+else
+{
+
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">Claim from @claim.Merchant</h5>
+            <p class="card-text">
+                Claim ID: @claim.ClaimId<br />
+                Claimed Amount: $@claim.ClaimedAmount<br />
+                Approved Amount: @(claim.ApprovedAmount.HasValue ? $"${claim.ApprovedAmount}" : "Pending")<br />
+                Purchase Date:
+                @(DateTimeOffset.FromUnixTimeMilliseconds(claim.PurchaseDate).DateTime.ToShortDateString())<br />
+                Category: @claim.Category.CategoryName (@claim.Category.ParentCategoryName)<br />
+                Description: @claim.Description<br />
+                <a href="@claim.ReceiptPath" target="_blank">Download receipt</a>
+            </p>
+        </div>
+    </div>
+
+}
+
+@code {
+    [Parameter]
+    [Required]
+    public string claimId { get; set; }
+    private ClaimModel claim;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Console.WriteLine($"Navigated to Claim: {claimId}");
+        claim = await ClaimsService.GetClaimByIdAsync(new Guid(claimId));
+    }
+}

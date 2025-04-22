@@ -1,0 +1,72 @@
+@page "/new-claim"
+@using BenefitsManager.Common.Models
+@using BenefitsManager.Frontend.WebPortal.Ui.Services
+@inject NavigationManager Navigation
+@inject ClaimsService ClaimsService
+
+<h3>Create New Claim</h3>
+
+<div class="form-group">
+    <label>Merchant</label>
+    <input type="text" class="form-control" @bind="newClaim.Merchant" />
+</div>
+
+<div class="form-group">
+    <label>Claimed Amount</label>
+    <input type="number" class="form-control" @bind="newClaim.ClaimedAmount" />
+</div>
+
+<div class="form-group">
+    <label>Purchase Date</label>
+    <input type="date" class="form-control" @bind="purchaseDate" />
+</div>
+
+<div class="form-group">
+    <label>Category</label>
+    <select class="form-control" @bind="newClaim.CategoryCode">
+        <option value="CAT001">Clothing and shoes | Athletic Accessories</option>
+        <option value="CAT002">Clothing and shoes | Athletic Apparel</option>
+        <option value="CAT003">Fitness Activities | Gym</option>
+        <option value="CAT004">Fitness Activities | Fitness Classes</option>
+        <option value="CAT005">Home Office | Desks and Chairs</option>
+    </select>
+</div>
+
+
+<div class="form-group">
+    <label>Description</label>
+    <textarea class="form-control" @bind="newClaim.Description"></textarea>
+</div>
+
+<button class="btn btn-primary" @onclick="SubmitNewClaim">Submit Claim</button>
+
+@code {
+    private ClaimAddModel newClaim = new ClaimAddModel();
+    private DateTime purchaseDate = DateTime.Today; // Default purchase dat
+
+    private async Task SubmitNewClaim()
+    {
+        // Convert purchaseDate to epoch timestamp (seconds since 1970-01-01)
+        newClaim.PurchaseDate = new DateTimeOffset(purchaseDate).ToUnixTimeMilliseconds();
+        newClaim.CreatedBy = new UserModel
+            {
+                Id = "2c5aa106-adce-4112-9a56-d37477ef18bf",
+                Email = "user3@mail.com",
+                Name = "User 3"
+            };
+        newClaim.ReceiptPath = "https://www.example.com/receipts/claim1.pdf";
+
+        var response = await ClaimsService.CreateClaimAsync(newClaim);
+
+        // if (response.IsSuccessStatusCode)
+        // {
+        //     Navigation.NavigateTo("/"); // Redirect to homepage or another page
+        // }
+        // else
+        // {
+        //     // Handle error (display a message, log the error, etc.)
+        //     Console.WriteLine("Error submitting claim.");
+        // }
+    }
+
+}
